@@ -3,9 +3,14 @@
 .home {
     margin-top: 10vh;
     margin-left: 5vw;
-    height: 90vh;
+    margin-right: 5vw;
+    min-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
+/* Títulos e parágrafos */
 .home-h1, .home-description p {
     font-family: 'Raleway', sans-serif;
 }
@@ -13,7 +18,7 @@
 /* ===================== */
 /* H1 com degradê e digitação */
 .home-h1 {
-    font-size: 4rem;
+    font-size: clamp(2rem, 5vw, 4rem);
     margin-bottom: 2rem;
     background: linear-gradient(90deg, #ffffff 0%, #999999 100%);
     -webkit-background-clip: text;
@@ -46,39 +51,34 @@
 
 /* ===================== */
 /* Parágrafos como blocos */
-.paragraph-blocks {
-    margin: 3px;
-    gap: 2rem;
+.paragraph-blocks,
+.paragraph-blocks_ {
+    margin: 3px 0;
     opacity: 0;
     transform: translateY(20px);
     animation: fadeUp 0.8s ease-out forwards;
-    animation-delay: 2.2s; /* Começa logo após o h1 terminar */
-    max-width: 50ch;
-    font-size: 1.2rem;
+    max-width: 65ch;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
     color: #9C9C9C;
     line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.paragraph-blocks {
+    animation-delay: 2.2s;
 }
 .paragraph-blocks_ {
-    margin: 3px;
-    gap: 2rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease-out forwards;
-    animation-delay: 2.5s; /* Começa logo após o h1 terminar */
-    max-width: 50ch;
-    font-size: 1.2rem;
-    color: #9C9C9C;
-    line-height: 1.5;
+    animation-delay: 2.5s;
 }
 
 @keyframes fadeUp {
     from {
         opacity: 0;
-        transform: translatex(-100%);
+        transform: translateX(-100%);
     }
     to {
         opacity: 1;
-        transform: translatex(0);
+        transform: translateX(0);
     }
 }
 
@@ -89,19 +89,21 @@
     border: none;
     color: white;
     padding: 12px 24px;
-    width: 300px;
-    font-size: 20px;
+    width: 100%;
+    max-width: 300px;
+    font-size: clamp(1rem, 3vw, 1.25rem);
     margin-top: 20px;
     cursor: pointer;
     border-radius: 4px;
     opacity: 0;
     transform: translateX(-100%);
     animation: slideInLeft 1s ease-out forwards;
-    animation-delay: 3s; /* depois dos parágrafos */
+    animation-delay: 3s;
 }
 .home-button:hover {
     background-color: #2b1842;
 }
+
 @keyframes slideInLeft {
     from {
         transform: translateX(-100%);
@@ -110,5 +112,25 @@
     to {
         transform: translateX(0);
         opacity: 1;
+    }
+}
+
+/* ===================== */
+/* Responsividade extra */
+@media (max-width: 768px) {
+    .home {
+        align-items: center;
+        text-align: center;
+    }
+
+    .home-h1 {
+        white-space: normal;
+        width: 100%;
+    }
+
+    .paragraph-blocks, .paragraph-blocks_ {
+        max-width: 90%;
+        text-align: justify;   /* justifica o texto */
+
     }
 }
