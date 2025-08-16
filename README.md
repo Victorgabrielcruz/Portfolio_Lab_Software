@@ -41,7 +41,7 @@ src/
 
 1. **Clonar o repositório**
 ```bash
-git clone https://github.com/SEU_USUARIO/Portfolio_Lab_Software.git
+git clone https://github.com/Victorgabrielcruz/Portfolio_Lab_Software.git
 cd Portfolio_Lab_Software
 ````
 
