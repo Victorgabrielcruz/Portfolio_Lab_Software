@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import "../assets/styles/Projects.css";
 import img_git from "../assets/images/git.jpg"; // imagem padrão

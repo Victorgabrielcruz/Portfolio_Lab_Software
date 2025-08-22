@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import "../assets/styles/Projects.css";
 import img_git from "../assets/images/git.jpg"; // Imagem de fundo opcional
-import { Link } from "react-router-dom"; // <- substituir o import
+import { Link } from "react-router-dom"; // Navegação para outra página
+
 type Repo = {
   id: number;
   name: string;
@@ -17,7 +18,7 @@ type Repo = {
 export default function Projects() {
   const [repos, setRepos] = useState<Repo[]>([]);
   const [loading, setLoading] = useState(true);
-  const githubUser = "Victorgabrielcruz"; // seu usuário no GitHub
+  const githubUser = "Victorgabrielcruz";
 
   useEffect(() => {
     fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=3`)
@@ -49,10 +50,10 @@ export default function Projects() {
               className="project-link"
             >
               <Card
-                imageSrc={img_git} // imagem do GitHub
+                imageSrc={img_git}
                 altText={repo.name}
                 title={repo.name}
-                dateRange={new Date(repo.updated_at).toLocaleDateString()} // data da última atualização
+                dateRange={new Date(repo.updated_at).toLocaleDateString()}
                 hoverText={repo.description || "Sem descrição"}
               />
             </a>
@@ -60,11 +61,11 @@ export default function Projects() {
         </div>
       )}
 
-<div className="projects-button-container">
-  <Link to="/repos">
-    <button className="projects-button">Veja Mais</button>
-  </Link>
-</div>
+      <div className="projects-button-container">
+        <Link to="/repos">
+          <button className="projects-button">Veja Mais</button>
+        </Link>
+      </div>
     </div>
   );
 }
