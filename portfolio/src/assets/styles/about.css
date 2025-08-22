@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css');
 
 .container-about {
     width: 100%;
@@ -61,11 +61,11 @@
 .about-description {
     flex: 2;
     max-width: 650px;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Hack', sans-serif;
     margin-left: 4em;
 }
 .paragraph-blocks-about {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Hack', sans-serif;
     font-size: clamp(1rem, 2.5vw, 1.1rem);
     line-height: 1.6;
     margin-bottom: 1rem;

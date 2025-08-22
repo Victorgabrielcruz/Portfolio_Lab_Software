@@ -56,6 +56,7 @@ export default function AllProjects() {
                 title={repo.name}
                 dateRange={new Date(repo.updated_at).toLocaleDateString()}
                 hoverText={repo.description || "Sem descrição"}
+                open={false} // Propriedade para controle de estado, se necessários
               />
             </a>
           ))}

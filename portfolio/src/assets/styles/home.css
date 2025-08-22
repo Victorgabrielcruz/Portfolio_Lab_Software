@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css');
 
 .container-home {    
     width: 100%;
@@ -24,17 +24,10 @@
 /* ===================== */
 /* Imagem deslizando da direita */
 .home-image {
-    flex: 1;
+    flex: 2;
     display: flex;
-    justify-content: center;
-    transform: translateX(100%); /* começa fora da tela à direita */
-    transition: transform 1s ease; /* animação suave */
+    justify-content: end;
 }
-
-.home-image.slide-in {
-    transform: translateX(0); /* desliza para posição final */
-}
-
 .home img {
     max-width: 350px;
     height: auto;
@@ -50,7 +43,7 @@
 /* ===================== */
 /* Títulos e parágrafos */
 .home-h1, .home-description p {
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Hack', sans-serif;
 }
 
 /* H1 com degradê e digitação */
@@ -79,7 +72,7 @@
 
 @keyframes typingH1 {
     from { width: 0; }
-    to { width: 21ch; }
+    to { width: 15ch; }
 }
 @keyframes blink {
     0%, 50%, 100% { opacity: 1; }

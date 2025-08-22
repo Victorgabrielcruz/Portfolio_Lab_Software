@@ -3,7 +3,7 @@ import "../assets/styles/home.css";
 import Astronauta from "../assets/images/Astronauta.png";
 
 export default function Home() {
-  const name = "Víctor Gabriel Cruz Pereira";
+  const name = "Víctor Gabriel";
 
   return (
     <section className="container-home">
