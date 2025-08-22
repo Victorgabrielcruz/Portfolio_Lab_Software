@@ -43,6 +43,7 @@ function Experience() {
             title={empresa.title}
             dateRange={empresa.dateRange}
             hoverText={empresa.hoverText}
+            open={true}
           />
         ))}
       </div>

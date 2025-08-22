@@ -10,7 +10,7 @@ export interface CardProps {
   open: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ imageSrc, altText, title, dateRange, hoverText, open = true }) => {
+const Card: React.FC<CardProps> = ({ imageSrc, altText, title, dateRange, hoverText, open }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({ imageSrc, altText, title, dateRange, hoverT
   };
 
   return (
-    <div     className={`card-wrapper ${isClicked && open ? "expanded" : ""}`}onClick={handleClick}>
+    <div     className={`card-wrapper ${isClicked ? "expanded" : ""}`}onClick={handleClick}>
       <div className="card-container">
         <div className="card-image-wrapper">
           <img src={imageSrc} alt={altText} className="card-image" />

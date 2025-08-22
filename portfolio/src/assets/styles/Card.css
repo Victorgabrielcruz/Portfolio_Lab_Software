@@ -14,6 +14,9 @@
     transform: translateY(0);
   }
 }
+.card-click-text p{
+  color: #222;
+}
 /* card continua como estava */
 .card-container {
   position: relative;
