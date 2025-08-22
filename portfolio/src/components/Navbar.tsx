@@ -1,5 +1,5 @@
 import type { FC, JSX } from "react";
-import { Link as ScrollLink, scroller } from "react-scroll";
+import { scroller } from "react-scroll";
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import perfilImg from "../assets/images/perfil.jpeg";
 import "../assets/styles/Navbar.css";
@@ -12,10 +12,8 @@ const Navbar: FC = (): JSX.Element => {
 
   const handleNavClick = (section: string) => {
     if (location.pathname !== "/") {
-      // Se não estiver na página principal, navega para ela e rola depois
       navigate("/", { state: { scrollTo: section } });
     } else {
-      // Se já estiver, apenas rola
       scroller.scrollTo(section, {
         smooth: true,
         duration: 500,
@@ -24,13 +22,12 @@ const Navbar: FC = (): JSX.Element => {
     }
   };
 
-  // Atualiza activeSection quando a página é carregada ou muda de estado
   useEffect(() => {
     if (location.state && (location.state as any).scrollTo) {
       const section = (location.state as any).scrollTo;
       scroller.scrollTo(section, { smooth: true, duration: 500, offset: -70 });
       setActiveSection(section);
-      navigate(location.pathname, { replace: true, state: {} }); // Limpa state
+      navigate(location.pathname, { replace: true, state: {} });
     }
   }, [location, navigate]);
 
@@ -50,7 +47,7 @@ const Navbar: FC = (): JSX.Element => {
             </span>
           ))}
           <RouterLink to="/repos" className="linkStyles">
-            Veja Mais
+            Repositories
           </RouterLink>
         </div>
       </div>
