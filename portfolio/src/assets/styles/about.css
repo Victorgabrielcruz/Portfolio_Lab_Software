@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap');
+
+.container-about {
+    width: 100%;
+    background: url('../images/bg-stars.png') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 0;
+}
+
+/* layout principal */
+.about {
+    margin-right: 5vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+    color: white;
+}
+
+/* imagem estilo card */
+.img-about {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+.img-about img {
+    max-width: 350px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(255, 0, 200, 0.6); /* efeito glow */
+    transition: transform 0.6s ease;
+}
+.img-about img:hover {
+    transform: scale(1.05);
+}
+
+/* título */
+.about-h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #fff 0%, #999 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0;
+    transform: translateX(-100%);
+    animation: slideInFromLeft 1.2s forwards;
+}
+
+/* animação título */
+@keyframes slideInFromLeft {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* texto */
+.about-description {
+    flex: 2;
+    max-width: 650px;
+    font-family: 'Raleway', sans-serif;
+    margin-left: 4em;
+}
+.paragraph-blocks-about {
+    font-family: 'Raleway', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: rgb(236, 236, 236);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.8s ease-out forwards;
+}
+.paragraph-blocks-about:nth-child(2) {
+    animation-delay: 0.4s;
+}
+.paragraph-blocks-about:nth-child(3) {
+    animation-delay: 0.8s;
+}
+
+/* animação parágrafos */
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

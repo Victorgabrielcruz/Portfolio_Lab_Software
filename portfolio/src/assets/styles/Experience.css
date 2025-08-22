@@ -1,0 +1,47 @@
+.experience {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  color: white;
+}
+
+.experience-title {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+}
+
+.experience-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.technologies-title {
+  margin-top: 50px;
+  font-size: 2em;
+}
+
+/* GRID DE 3 COLUNAS */
+.technologies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+  max-width: 900px; /* evita esticar demais em telas grandes */
+}
+
+/* Animação para aparecer um por vez */
+.tech-card {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,21 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;700&display=swap');
 
+.container-home {    
+    width: 100%;
+}
+
+/* ===================== */
+/* Layout principal */
 .home {
-    margin-top: 10vh;
     margin-left: 5vw;
     margin-right: 5vw;
     min-height: 90vh;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row; /* texto e imagem lado a lado */
+    align-items:center; /* centraliza verticalmente */
+    justify-content: space-between; /* espaço entre texto e imagem */
 }
 
+.home-text {
+    flex: 1;
+    padding-right: 2rem;
+}
+
+/* ===================== */
+/* Imagem deslizando da direita */
+.home-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    transform: translateX(100%); /* começa fora da tela à direita */
+    transition: transform 1s ease; /* animação suave */
+}
+
+.home-image.slide-in {
+    transform: translateX(0); /* desliza para posição final */
+}
+
+.home img {
+    max-width: 350px;
+    height: auto;
+    animation: floatUpDown 4s ease-in-out infinite; /* animação flutuar */
+}
+
+/* animação para flutuar */
+@keyframes floatUpDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+/* ===================== */
 /* Títulos e parágrafos */
 .home-h1, .home-description p {
     font-family: 'Raleway', sans-serif;
 }
 
-/* ===================== */
 /* H1 com degradê e digitação */
 .home-h1 {
     font-size: clamp(2rem, 5vw, 4rem);
@@ -50,7 +87,7 @@
 }
 
 /* ===================== */
-/* Parágrafos como blocos */
+/* Parágrafos */
 .paragraph-blocks,
 .paragraph-blocks_ {
     margin: 3px 0;
@@ -64,22 +101,12 @@
     margin-bottom: 15px;
 }
 
-.paragraph-blocks {
-    animation-delay: 2.2s;
-}
-.paragraph-blocks_ {
-    animation-delay: 2.5s;
-}
+.paragraph-blocks { animation-delay: 2.2s; }
+.paragraph-blocks_ { animation-delay: 2.5s; }
 
 @keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(-100%); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 /* ===================== */
@@ -105,32 +132,29 @@
 }
 
 @keyframes slideInLeft {
-    from {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
 }
 
 /* ===================== */
-/* Responsividade extra */
+/* Responsividade */
 @media (max-width: 768px) {
     .home {
+        flex-direction: column;
         align-items: center;
         text-align: center;
     }
 
-    .home-h1 {
-        white-space: normal;
-        width: 100%;
+    .home-text {
+        padding-right: 0;
+    }
+
+    .home img {
+        max-width: 80%;
     }
 
     .paragraph-blocks, .paragraph-blocks_ {
         max-width: 90%;
-        text-align: justify;   /* justifica o texto */
-
+        text-align: justify;
     }
 }
