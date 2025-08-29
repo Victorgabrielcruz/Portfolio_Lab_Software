@@ -33,7 +33,7 @@ export default function Projects() {
               Seu navegador não suporta vídeos em HTML5.
             </video>
             <a
-              href="https://github.com/Victorgabrielcruz/RecompensaVerde"
+              href="https://github.com/Victorgabrielcruz/Recompensa-Verde"
               target="_blank"
               rel="noreferrer"
               className="video-button"
@@ -49,7 +49,7 @@ export default function Projects() {
               Seu navegador não suporta vídeos em HTML5.
             </video>
             <a
-              href="https://github.com/Victorgabrielcruz/EducaCidades"
+              href="https://github.com/Victorgabrielcruz/Instituto-Educa-Cidade"
               target="_blank"
               rel="noreferrer"
               className="video-button"
