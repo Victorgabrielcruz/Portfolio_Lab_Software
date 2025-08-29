@@ -7,7 +7,6 @@ export interface CardProps {
   title: string;
   dateRange: string;
   hoverText: string;
-  open: boolean;
 }
 
 const Card: React.FC<CardProps> = ({ imageSrc, altText, title, dateRange, hoverText }) => {
