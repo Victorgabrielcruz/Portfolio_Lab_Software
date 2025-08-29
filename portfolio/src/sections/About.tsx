@@ -16,9 +16,7 @@ export default function About() {
           <p className="paragraph-blocks-about">
            Embora ainda esteja no início da carreira, já participei de projetos bem-sucedidos que demonstram meu comprometimento, capacidade de aprendizado e entusiasmo por novas tecnologias.
           </p>
-          <p className="paragraph-blocks-about">
-            Suspendisse potenti. Proin et lorem eros. Integer sed magna ac felis
-            fermentum bibendum.
+          <p className="paragraph-blocks-about"> "You should enjoy the little detours. Because that's where you'll find the things more important than what you want."
           </p>
         </article>
       </div>
