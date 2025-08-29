@@ -22,7 +22,7 @@ export default function Projects() {
 
   return (
     <div className="projects-section">
-      <h1 className="projects-title">Meus Vídeos</h1>
+      <h1 className="projects-title">Meus Projetos</h1>
 
       <div className="projects-carousel">
         <Slider {...settings}>
