@@ -11,12 +11,7 @@ export default function Home() {
         <article className="home-text">
           <h1 className="home-h1">{name}</h1>
           <section className="home-description">
-            <p className="paragraph-blocks">
-              Olá! Eu sou Víctor Gabriel, desenvolvedor back-end e analista de dados, apaixonado por transformar ideias em soluções práticas e eficientes.
-            </p>
-            <p className="paragraph-blocks_">
-              Sou Técnico em Informática e estudante de Engenharia de Software na PUC Minas, com afinidade por back-end e análise de dados. Já desenvolvi projetos bem-sucedidos e estou sempre em busca de aprender e aplicar novas tecnologias.
-            </p>
+            <p className="paragraph-blocks"> Olá! Eu sou Víctor Gabriel, desenvolvedor back-end apaixonado por transformar ideias em soluções práticas e eficientes.   </p>
           </section>
           <section className="home-button-section">
             <Link

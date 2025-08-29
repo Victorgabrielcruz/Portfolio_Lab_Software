@@ -9,15 +9,12 @@ export default function About() {
           <img src={AboutImage} alt="About Me" />
         </article>
         <article className="about-description">
-          <h2 className="about-h2">Your Name</h2>
+          <h2 className="about-h2">Víctor Gabriel</h2>
           <p className="paragraph-blocks-about">
-            Intro text: Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Sou Técnico em Informática e estudante de Engenharia de Software na PUC Minas, com afinidade pela área de back-end e apaixonado por transformar ideias em soluções práticas e eficientes.
           </p>
           <p className="paragraph-blocks-about">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eget
-            lectus sit amet elit consequat tempus. Integer id nulla vel lacus
-            commodo finibus.
+           Embora ainda esteja no início da carreira, já participei de projetos bem-sucedidos que demonstram meu comprometimento, capacidade de aprendizado e entusiasmo por novas tecnologias.
           </p>
           <p className="paragraph-blocks-about">
             Suspendisse potenti. Proin et lorem eros. Integer sed magna ac felis
