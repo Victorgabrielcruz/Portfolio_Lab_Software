@@ -44,3 +44,24 @@ p, h1, h2, h3 {
 .projects-button:hover {
   background-color: #555;
 }
+.video-container {
+  position: relative;
+  display: inline-block;
+}
+
+.video-button {
+  position: absolute;
+  bottom: 80px;
+  right: 15px;
+  background: #555;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.video-button:hover {
+  background: #adadad;
+}

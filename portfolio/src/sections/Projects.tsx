@@ -1,66 +1,64 @@
-import { useEffect, useState } from "react";
-import Card from "../components/Card";
+import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import "../assets/styles/Projects.css";
-import img_git from "../assets/images/git.jpg"; // Imagem de fundo opcional
-import { Link } from "react-router-dom"; // Navegação para outra página
-
-type Repo = {
-  id: number;
-  name: string;
-  description: string | null;
-  html_url: string;
-  owner: {
-    avatar_url: string;
-  };
-  updated_at: string;
-};
+import video1 from "../assets/videos/EducaCidades.mp4";
+import video2 from "../assets/videos/RecompensaVerde_Video.mp4";
+import { FaGithub} from "react-icons/fa";
 
 export default function Projects() {
-  const [repos, setRepos] = useState<Repo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const githubUser = "Victorgabrielcruz";
-
-  useEffect(() => {
-    fetch(`https://api.github.com/users/${githubUser}/repos?sort=updated&per_page=3`)
-      .then((res) => res.json())
-      .then((data) => {
-        setRepos(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
+  // Configuração do carrossel
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 600,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 4000,
+    arrows: true,
+  };
 
   return (
     <div className="projects-section">
-      <h1 className="projects-title">Meus Projetos</h1>
+      <h1 className="projects-title">Meus Vídeos</h1>
 
-      {loading ? (
-        <p>Carregando projetos...</p>
-      ) : (
-        <div className="projects-cards">
-          {repos.map((repo) => (
+      <div className="projects-carousel">
+        <Slider {...settings}>
+          {/* Slide 1 */}
+          <div className="video-container">
+            <video width="100%" height="auto" controls>
+              <source src={video2} type="video/mp4" />
+              Seu navegador não suporta vídeos em HTML5.
+            </video>
             <a
-              key={repo.id}
-              href={repo.html_url}
+              href="https://github.com/Victorgabrielcruz/RecompensaVerde"
               target="_blank"
               rel="noreferrer"
-              className="project-link"
+              className="video-button"
             >
-              <Card
-                imageSrc={img_git}
-                altText={repo.name}
-                title={repo.name}
-                dateRange={new Date(repo.updated_at).toLocaleDateString()}
-                hoverText={repo.description || "Sem descrição"}
-                open={false} // Propriedade para controle de estado, se necessários
-              />
+              <FaGithub size={30} color="#000000" />
             </a>
-          ))}
-        </div>
-      )}
+          </div>
+
+          {/* Slide 2 */}
+          <div className="video-container">
+            <video width="100%" height="auto" controls>
+              <source src={video1} type="video/mp4" />
+              Seu navegador não suporta vídeos em HTML5.
+            </video>
+            <a
+              href="https://github.com/Victorgabrielcruz/EducaCidades"
+              target="_blank"
+              rel="noreferrer"
+              className="video-button"
+            >
+              <FaGithub size={30} color="#000000" />
+            </a>
+          </div>
+        </Slider>
+      </div>
 
       <div className="projects-button-container">
         <Link to="/repos">
