@@ -64,7 +64,7 @@ npm run dev
 http://localhost:5173
 ```
 ## 📂 Protótipo Figma
-![Portfolio](./Figma/My Portfolio e mais 3 páginas - Pessoal — Microsoft_ Edge 2025-08-29 19-47-52.gif)
+![Portfolio](./Figma/Portfolio.gif)
 ![Home](./Figma/Home.png)
 ![About](./Figma/About.png)
 ![Contacts](./Figma/Contacts.jpg)
