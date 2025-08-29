@@ -64,10 +64,11 @@ npm run dev
 http://localhost:5173
 ```
 ## 📂 Protótipo Figma
-![Portfolio](./Figma/Portfolio.gif)
 ![Home](./Figma/Home.png)
 ![About](./Figma/About.png)
 ![Contacts](./Figma/Contacts.jpg)
 ![Experience](./Figma/Experience.png)
 ![Projects](./Figma/Projects.png)
+![Portfolio](./Figma/Portfolio.gif)
+
 
