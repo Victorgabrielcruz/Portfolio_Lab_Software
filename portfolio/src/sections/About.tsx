@@ -14,9 +14,13 @@ export default function About() {
             Sou Técnico em Informática e estudante de Engenharia de Software na PUC Minas, com afinidade pela área de back-end e apaixonado por transformar ideias em soluções práticas e eficientes.
           </p>
           <p className="paragraph-blocks-about">
-           Embora ainda esteja no início da carreira, já participei de projetos bem-sucedidos que demonstram meu comprometimento, capacidade de aprendizado e entusiasmo por novas tecnologias.
+            Atualmente sou estagiário de Dados na Stellantis, atuando na área de Customs Controllings South America, onde aplico meus conhecimentos em análise de dados para apoiar decisões estratégicas e operacionais.
           </p>
-          <p className="paragraph-blocks-about"> "You should enjoy the little detours. Because that's where you'll find the things more important than what you want."
+          <p className="paragraph-blocks-about">
+            Embora ainda esteja no início da carreira, já participei de projetos bem-sucedidos que demonstram meu comprometimento, capacidade de aprendizado e entusiasmo por novas tecnologias.
+          </p>
+          <p className="paragraph-blocks-about">
+            "You should enjoy the little detours. Because that's where you'll find the things more important than what you want."
           </p>
         </article>
       </div>
