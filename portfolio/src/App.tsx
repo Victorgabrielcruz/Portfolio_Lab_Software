@@ -10,6 +10,7 @@ import Contact from "./sections/Contact";
 import RepoPage from "./page/Repo";
 import CantadasSecreta from "./page/CantadasSecreta";
 import LazySection from "./components/LazySection";
+import AdminApp from "./page/AdminApp";
 
 function App() {
   return (
@@ -66,12 +67,9 @@ function App() {
         />
 
         {/* 👇 ROTAS SECRETAS - SEM NAVBAR */}
-        <Route path="/cantadas" element={<CantadasSecreta />} />
-        <Route path="/secret" element={<CantadasSecreta />} />
         <Route path="/lab" element={<CantadasSecreta />} />
-        <Route path="/dev" element={<CantadasSecreta />} />
-        <Route path="/love" element={<CantadasSecreta />} />
-        <Route path="/romantic" element={<CantadasSecreta />} />
+
+        <Route path="/lab/admin" element={<AdminApp />} />
         
         {/* Rota fallback para 404 */}
         <Route path="*" element={
