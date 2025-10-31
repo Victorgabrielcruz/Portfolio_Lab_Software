@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { apiService } from '../service/apiService';
-import type { Cantada, Estatisticas } from '../service/apiService';
+import type { Estatisticas } from '../service/apiService';
 
 export const useCantadasApi = () => {
   const [cantadas, setCantadas] = useState<string[]>([]);
