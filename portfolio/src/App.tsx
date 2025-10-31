@@ -8,18 +8,19 @@ import Projects from "./sections/Projects";
 import Experience from "./sections/Experience";
 import Contact from "./sections/Contact";
 import RepoPage from "./page/Repo"; // página separada
+import CantadasSecreta from "./page/CantadasSecreta"; // NOVA PÁGINA SECRETA
 import LazySection from "./components/LazySection"; // para animação ao entrar na tela
 
 function App() {
   return (
     <Router>
-      <Navbar />
-
       <Routes>
+        {/* Rota normal com navbar */}
         <Route
           path="/"
           element={
             <>
+              <Navbar />
               <Element name="home" className="section">
                 <LazySection className="homeSection">
                   <Home />
@@ -53,7 +54,38 @@ function App() {
           }
         />
 
-        <Route path="/repos" element={<RepoPage />} /> {/* página separada */}
+        {/* Rota pública de repositórios */}
+        <Route 
+          path="/repos" 
+          element={
+            <>
+              <Navbar />
+              <RepoPage />
+            </>
+          } 
+        />
+
+        {/* 👇 ROTA SECRETA - SEM NAVBAR */}
+        <Route 
+          path="/cantadas" 
+          element={<CantadasSecreta />} 
+        />
+        
+        {/* 👇 MAIS ROTAS SECRETAS ALTERNATIVAS */}
+        <Route 
+          path="/secret" 
+          element={<CantadasSecreta />} 
+        />
+        
+        <Route 
+          path="/lab" 
+          element={<CantadasSecreta />} 
+        />
+        
+        <Route 
+          path="/dev" 
+          element={<CantadasSecreta />} 
+        />
       </Routes>
     </Router>
   );
