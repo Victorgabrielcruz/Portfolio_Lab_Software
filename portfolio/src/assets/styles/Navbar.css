@@ -4,6 +4,7 @@
   width: 100%;
   display: flex;
   flex-direction: row;
+  z-index: 1000; /* ⬅️ AQUI A SOLUÇÃO */
 }
 
 /* Animação da barra vindo da esquerda */
@@ -175,7 +176,7 @@
   overflow: hidden;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
+  z-index: 1001;
 }
 
 .mobile-dropdown.active {
@@ -209,6 +210,8 @@
   .navStyles {
     flex-direction: column;
     align-items: center;
+        z-index: 1000; /* ⬅️ Garante no mobile também */
+
   }
   
   .linksNavStyle {
@@ -216,6 +219,8 @@
     height: auto;
     padding: 15px;
     margin-bottom: 15px;
+        z-index: 1000; /* ⬅️ Garante no mobile também */
+
   }
   
   .containerStyles {
