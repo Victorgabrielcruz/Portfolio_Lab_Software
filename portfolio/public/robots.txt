@@ -7,4 +7,4 @@ Disallow: /dev
 Disallow: /love
 Disallow: /romantic
 
-Sitemap: https://victorgabrielcruzpereira.com.br/sitemap.xml
+Sitemap: https://www.victorgabrielcruzpereira.com.br/sitemap.xml
