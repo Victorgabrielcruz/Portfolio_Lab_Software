@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { FaLinkedin, FaGithub, FaWhatsapp } from "react-icons/fa";
+import { FaLinkedin, FaGithub } from "react-icons/fa";
 import "../assets/styles/Contacts.css";
 
 export default function Contacts() {
@@ -21,7 +21,6 @@ export default function Contacts() {
       button: "Mandar mensagem",
       success: "Uhuu! Mensagem enviada com sucesso 😎",
       error: "Ops! Não consegui enviar: ",
-      whatsapp: "Conversar no WhatsApp",
     },
     en: {
       title: "Get in Touch",
@@ -35,7 +34,6 @@ export default function Contacts() {
       button: "Send Message",
       success: "Yay! Message sent successfully 😎",
       error: "Oops! Couldn't send: ",
-      whatsapp: "Chat on WhatsApp",
     },
   };
 
@@ -60,14 +58,6 @@ export default function Contacts() {
           }
         );
     }
-  };
-
-  // Função para abrir WhatsApp
-  const openWhatsApp = () => {
-    const phoneNumber = "5538998968898"; // Substitua pelo seu número
-    const message = "Olá Victor! Gostaria de conversar sobre...";
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -96,23 +86,7 @@ export default function Contacts() {
             >
               <FaGithub className="social github" />
             </a>
-            <button
-              onClick={openWhatsApp}
-              className="social whatsapp-btn"
-              title={texts[language].whatsapp}
-            >
-              <FaWhatsapp className="social whatsapp" />
-            </button>
           </div>
-
-          {/* Botão WhatsApp para mobile */}
-          <button 
-            onClick={openWhatsApp}
-            className="whatsapp-mobile-btn"
-          >
-            <FaWhatsapp className="whatsapp-icon" />
-            {texts[language].whatsapp}
-          </button>
         </div>
 
         <div className="contact-right">
