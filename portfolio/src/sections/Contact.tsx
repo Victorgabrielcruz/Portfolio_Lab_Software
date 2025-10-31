@@ -64,7 +64,7 @@ export default function Contacts() {
 
   // Função para abrir WhatsApp
   const openWhatsApp = () => {
-    const phoneNumber = "5534999999999"; // Substitua pelo seu número
+    const phoneNumber = "5538998968898"; // Substitua pelo seu número
     const message = "Olá Victor! Gostaria de conversar sobre...";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
