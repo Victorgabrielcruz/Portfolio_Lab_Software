@@ -70,6 +70,10 @@
   color: #ffffff;
 }
 
+.social.whatsapp {
+  color: #25D366; /* ✅ COR ADICIONADA */
+}
+
 /* Botão WhatsApp entre os ícones */
 .whatsapp-btn {
   background: none;
@@ -94,12 +98,13 @@
 }
 
 .social.whatsapp:hover {
-  color: #128C7E;
+  color: #128C7E; /* ✅ COR HOVER ADICIONADA */
 }
 
 /* Botão WhatsApp para mobile */
 .whatsapp-mobile-btn {
   display: none;
+  background: #25D366; /* ✅ FUNDO VERDE ADICIONADO */
   color: white;
   border: none;
   padding: 12px 20px;
@@ -112,10 +117,13 @@
   justify-content: center;
   gap: 10px;
   margin-top: 15px;
+  text-decoration: none; /* ✅ PARA USAR COMO LINK */
 }
 
 .whatsapp-mobile-btn:hover {
+  background: #128C7E; /* ✅ HOVER ADICIONADO */
   transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); /* ✅ SOMBRA ADICIONADA */
 }
 
 .whatsapp-icon {
@@ -173,6 +181,18 @@
   font-style: italic;
 }
 
+/* ✅ ANIMAÇÃO FADEIN ADICIONADA */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* Responsividade */
 @media (max-width: 900px) {
   .contact-card.big.two-columns {
@@ -223,5 +243,9 @@
   .whatsapp-mobile-btn {
     font-size: 0.9rem;
     padding: 10px 15px;
+  }
+  
+  .social-icons {
+    gap: 15px;
   }
 }
