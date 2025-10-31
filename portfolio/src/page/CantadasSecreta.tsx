@@ -1,12 +1,17 @@
 import { useState, useEffect } from "react";
-import { FaWhatsapp, FaInstagram, FaHeart } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaHeart, FaDatabase, FaSync } from "react-icons/fa";
+import { apiService } from "../service/apiService";
 import "../assets/styles/CantadasSecreta.css";
 
 const CantadasSecreta = () => {
   const [cantadaAtual, setCantadaAtual] = useState("");
   const [contador, setContador] = useState(0);
+  const [totalCantadas, setTotalCantadas] = useState(0);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
 
-  const cantadas = [
+  // Cantadas de fallback
+  const cantadasFallback = [
     "Gata, você é igual código binário... só tem 0 e 1! 💻",
     "Você é like do Instagram? Porque toda vez que te vejo, eu curto! ❤️",
     "Meu amor por você é igual bug no código... inesperado e difícil de resolver! 🐛",
@@ -16,35 +21,62 @@ const CantadasSecreta = () => {
     "Você é commit no meu Git? Porque você salva meus dias! 💾",
     "Meu coração é como console.log... só funciona quando você está por perto! 📝",
     "Gata, você é deploy? Porque toda vez que chego perto, meu coração sobe pro ar! 🚀",
-    "Você é o algoritmo do meu coração... complexo, mas sempre retorna true para você! 💝",
-    "Me chama de JavaScript e vem ser minha Promise, porque eu quero resolver com você! 📜",
-    "Se beleza fosse código, você seria open source! 🌟",
-    "Você é like do LinkedIn? Profissionalmente, eu te curti! 💼",
-    "Meu amor por você é igual loop infinito... nunca acaba! 🔄",
-    "Gata, você é Wi-Fi? Porque toda vez que você passa, meu sinal fica forte! 📶",
-    "Você é o Docker do meu coração... containeriza meus sentimentos! 🐳",
-    "Me chama de banco de dados e vem ser minha primary key! 🔑",
-    "Se existisse um hackathon do amor, eu faria pair programming com você! 👩‍💻👨‍💻",
-    "Você é o npm do meu projeto... instalo tudo que preciso em você! 📦",
-    "Meu coração é como API REST... sempre retorna 200 quando você faz uma request! 🌐",
-    "Gata, você é debug? Porque você acha todos os erros do meu coração! 🔧",
-    "Você é o TypeScript dos meus sentimentos... tipa tudo de bom! 📐",
-    "Me chama de GitHub e vem fazer merge com meu coração! 🐙",
-    "Se amor fosse código, você seria minha linha favorita! 💕",
-    "Você é o responsive do meu layout... se adapta perfeitamente à minha vida! 📱"
+    "Você é o algoritmo do meu coração... complexo, mas sempre retorna true para você! 💝"
   ];
 
   useEffect(() => {
-    gerarNovaCantada();
-    
-    const visitas = parseInt(localStorage.getItem('visitasCantadas') || '0') + 1;
-    localStorage.setItem('visitasCantadas', visitas.toString());
-    setContador(visitas);
+    inicializarDados();
   }, []);
 
-  const gerarNovaCantada = () => {
-    const cantadaAleatoria = cantadas[Math.floor(Math.random() * cantadas.length)];
+  const inicializarDados = async () => {
+    try {
+      setCarregando(true);
+      setErro("");
+
+      // Registrar visita na API e obter estatísticas
+      const estatisticas = await apiService.registrarVisita();
+      setContador(estatisticas.visitas);
+      setTotalCantadas(estatisticas.totalCantadas);
+
+      // Gerar primeira cantada
+      await gerarNovaCantadaAPI();
+
+    } catch (error) {
+      console.error('Erro ao conectar com a API:', error);
+      setErro("Não foi possível conectar com o servidor. Usando modo offline.");
+      
+      // Modo fallback
+      const visitasLocal = parseInt(localStorage.getItem('visitasCantadas') || '0') + 1;
+      localStorage.setItem('visitasCantadas', visitasLocal.toString());
+      setContador(visitasLocal);
+      setTotalCantadas(cantadasFallback.length);
+      gerarNovaCantadaLocal();
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  const gerarNovaCantadaAPI = async () => {
+    try {
+      const cantada = await apiService.obterCantadaAleatoria();
+      setCantadaAtual(cantada);
+    } catch (error) {
+      console.error('Erro ao buscar cantada da API:', error);
+      gerarNovaCantadaLocal();
+    }
+  };
+
+  const gerarNovaCantadaLocal = () => {
+    const cantadaAleatoria = cantadasFallback[Math.floor(Math.random() * cantadasFallback.length)];
     setCantadaAtual(cantadaAleatoria);
+  };
+
+  const gerarNovaCantada = () => {
+    if (erro) {
+      gerarNovaCantadaLocal();
+    } else {
+      gerarNovaCantadaAPI();
+    }
   };
 
   const copiarCantada = async () => {
@@ -53,39 +85,69 @@ const CantadasSecreta = () => {
       alert("Cantada copiada! 🎯");
     } catch (err) {
       console.error('Falha ao copiar: ', err);
+      alert("Erro ao copiar a cantada! 😢");
     }
   };
 
   const abrirWhatsApp = () => {
-    const phoneNumber = "5538998968898"; // SUBSTITUA pelo seu número
+    const phoneNumber = "5538998968898";
     const message = "Olá Victor! Acabei de ver suas cantadas dev e queria conversar! 😄";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
   const abrirInstagram = () => {
-    // SUBSTITUA pelo seu @ do Instagram
     const instagramUrl = "https://www.instagram.com/victor_gc21/";
     window.open(instagramUrl, '_blank');
   };
+
+  const recarregar = () => {
+    setErro("");
+    inicializarDados();
+  };
+
+  if (carregando) {
+    return (
+      <div className="cantadas-container">
+        <div className="loading">
+          <FaDatabase className="loading-icon" />
+          <p>Conectando com a API...</p>
+          <p className="loading-sub">Carregando suas cantadas especiais! 💖</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="cantadas-container">
       <div className="cantadas-header">
         <h1>💘 Cantadas Dev Secreta</h1>
-        <p className="subtitulo">Área restrita para desenvolvedores românticos</p>
+        <p className="subtitulo">
+          {erro ? "Modo offline ativado 📴" : "Conectado com API + PostgreSQL 🚀"}
+        </p>
+        
+        {erro && (
+          <div className="error-message">
+            <span>⚠️ {erro}</span>
+            <button onClick={recarregar} className="btn-retry">
+              <FaSync /> Tentar Novamente
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="cantada-card">
         <div className="cantada-content">
-          <span className="cantada-texto">{cantadaAtual}</span>
+          <span className="cantada-texto">
+            {cantadaAtual || "Clique em Nova Cantada para começar! 🎯"}
+          </span>
         </div>
         
         <div className="cantada-actions">
           <button onClick={gerarNovaCantada} className="btn nova-cantada">
             🔄 Nova Cantada
           </button>
-          <button onClick={copiarCantada} className="btn copiar">
+          <button onClick={copiarCantada} className="btn copiar" disabled={!cantadaAtual}>
             📋 Copiar
           </button>
         </div>
@@ -94,20 +156,24 @@ const CantadasSecreta = () => {
       <div className="stats">
         <div className="stat-item">
           <span className="stat-number">{contador}</span>
-          <span className="stat-label">Visitas Secretas</span>
+          <span className="stat-label">Visitas</span>
         </div>
         <div className="stat-item">
-          <span className="stat-number">{cantadas.length}</span>
-          <span className="stat-label">Cantadas no Banco</span>
+          <span className="stat-number">{totalCantadas}</span>
+          <span className="stat-label">Cantadas no BD</span>
+        </div>
+        <div className="stat-item">
+          <span className="stat-number">{erro ? "📴" : "✅"}</span>
+          <span className="stat-label">Status API</span>
         </div>
       </div>
 
-      {/* NOVO FOOTER COM REDES SOCIAIS */}
       <footer className="cantadas-footer">
         <div className="footer-content">
           <div className="footer-info">
-            <p>🔐 Página secreta - Acessível apenas por URL</p>
-            <p>Feito com <FaHeart className="heart-icon" /> e 💻 por Victor Gabriel</p>
+            <p>🔐 {erro ? "Modo Offline" : "API Online: cantadas-api.onrender.com"}</p>
+            <p>🗄️ {erro ? "Dados Locais" : "PostgreSQL Neon.tech"}</p>
+            <p>Feito com <FaHeart className="heart-icon" /> por Victor Gabriel</p>
           </div>
           
           <div className="social-links">
@@ -126,7 +192,12 @@ const CantadasSecreta = () => {
         </div>
         
         <div className="footer-bottom">
-          <p>💌 Se gostou das cantadas, me chama pra conversar!</p>
+          <p>
+            {erro 
+              ? "💌 Reconectando com o servidor..." 
+              : "💌 Dados em tempo real do banco de dados!"
+            }
+          </p>
         </div>
       </footer>
     </div>
