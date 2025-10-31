@@ -11,7 +11,7 @@ interface ModalMensagemProps {
 const ModalMensagem: React.FC<ModalMensagemProps> = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     mensagem: '',
-    privada: false
+    privada: true
   });
   const [enviando, setEnviando] = useState(false);
   const [sucesso, setSucesso] = useState(false);
@@ -93,7 +93,6 @@ const ModalMensagem: React.FC<ModalMensagemProps> = ({ isOpen, onClose }) => {
           <div className="modal-success">
             <div className="success-icon">✅</div>
             <h3>Mensagem enviada com sucesso!</h3>
-            <p>Obrigado pelo seu carinho! 💖</p>
             <small>Sua mensagem é {formData.privada ? 'privada 🔒' : 'pública 🌟'}</small>
           </div>
         ) : (
