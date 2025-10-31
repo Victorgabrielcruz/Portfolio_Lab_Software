@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaWhatsapp } from "react-icons/fa";
 import "../assets/styles/Contacts.css";
 
 export default function Contacts() {
@@ -21,10 +21,11 @@ export default function Contacts() {
       button: "Mandar mensagem",
       success: "Uhuu! Mensagem enviada com sucesso 😎",
       error: "Ops! Não consegui enviar: ",
+      whatsapp: "Conversar no WhatsApp",
     },
     en: {
       title: "Get in Touch",
-      subtitle: "I’d love to hear from you! 🚀",
+      subtitle: "I'd love to hear from you! 🚀",
       description: "If you have ideas, questions, or just want to chat, I'm here.",
       placeholders: {
         name: "Enter your name",
@@ -34,6 +35,7 @@ export default function Contacts() {
       button: "Send Message",
       success: "Yay! Message sent successfully 😎",
       error: "Oops! Couldn't send: ",
+      whatsapp: "Chat on WhatsApp",
     },
   };
 
@@ -60,6 +62,14 @@ export default function Contacts() {
     }
   };
 
+  // Função para abrir WhatsApp
+  const openWhatsApp = () => {
+    const phoneNumber = "5534999999999"; // Substitua pelo seu número
+    const message = "Olá Victor! Gostaria de conversar sobre...";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   return (
     <div className="contacts">
       <h1 className="contacts-title">{texts[language].title}</h1>
@@ -74,6 +84,7 @@ export default function Contacts() {
               href="https://www.linkedin.com/in/v%C3%ADctor-gabriel-cruz-pereira-927a84243/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
               target="_blank"
               rel="noreferrer"
+              title="LinkedIn"
             >
               <FaLinkedin className="social linkedin" />
             </a>
@@ -81,10 +92,27 @@ export default function Contacts() {
               href="https://github.com/Victorgabrielcruz"
               target="_blank"
               rel="noreferrer"
+              title="GitHub"
             >
               <FaGithub className="social github" />
             </a>
+            <button
+              onClick={openWhatsApp}
+              className="social whatsapp-btn"
+              title={texts[language].whatsapp}
+            >
+              <FaWhatsapp className="social whatsapp" />
+            </button>
           </div>
+
+          {/* Botão WhatsApp para mobile */}
+          <button 
+            onClick={openWhatsApp}
+            className="whatsapp-mobile-btn"
+          >
+            <FaWhatsapp className="whatsapp-icon" />
+            {texts[language].whatsapp}
+          </button>
         </div>
 
         <div className="contact-right">

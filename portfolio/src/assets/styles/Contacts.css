@@ -52,6 +52,8 @@
 .social-icons {
   display: flex;
   gap: 20px;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .social {
@@ -68,9 +70,62 @@
   color: #ffffff;
 }
 
+.social.whatsapp {
+  color: #25D366;
+}
+
+/* Botão WhatsApp entre os ícones */
+.whatsapp-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .social:hover {
   transform: scale(1.2);
+}
+
+.social.linkedin:hover {
+  color: #0077b5;
+}
+
+.social.github:hover {
   color: #a463f2;
+}
+
+.social.whatsapp:hover {
+  color: #128C7E;
+}
+
+/* Botão WhatsApp para mobile */
+.whatsapp-mobile-btn {
+  display: none;
+  background: #25D366;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.whatsapp-mobile-btn:hover {
+  background: #128C7E;
+  transform: translateY(-2px);
+}
+
+.whatsapp-icon {
+  font-size: 1.2rem;
 }
 
 /* Coluna Direita (formulário) */
@@ -130,25 +185,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-  }
-
-  .contact-left {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-
-  .social-icons {
-    justify-content: center;
-  }
-}
-/* MELHORAR a responsividade existente */
-@media (max-width: 900px) {
-  .contact-card.big.two-columns {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     padding: 30px 20px;
-    width: 95%;
   }
 
   .contact-left {
@@ -161,7 +198,17 @@
   }
 }
 
-/* ADICIONAR para telas muito pequenas */
+@media (max-width: 768px) {
+  .whatsapp-mobile-btn {
+    display: flex;
+  }
+  
+  /* Esconde o WhatsApp dos ícones sociais em mobile */
+  .social-icons .whatsapp-btn {
+    display: none;
+  }
+}
+
 @media (max-width: 480px) {
   .contacts {
     padding: 10px;
@@ -177,5 +224,10 @@
   
   .social {
     font-size: 2rem;
+  }
+  
+  .whatsapp-mobile-btn {
+    font-size: 0.9rem;
+    padding: 10px 15px;
   }
 }
