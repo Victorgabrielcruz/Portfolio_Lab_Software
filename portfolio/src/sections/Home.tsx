@@ -12,7 +12,7 @@ export default function Home() {
           <h1 className="home-h1">{name}</h1>
           <section className="home-description">
             <p className="paragraph-blocks">
-razer, sou Víctor Gabriel — Engenheiro de Software e Analista de Dados. 
+Prazer, sou Víctor Gabriel — Engenheiro de Software e Analista de Dados. 
               Transformo ideias em soluções inteligentes com foco em performance, escalabilidade e impacto real.
 </p>
           </section>
