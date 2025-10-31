@@ -192,7 +192,7 @@ const CantadasSecreta: React.FC = () => {
           <div className="footer-info">
             <p>🔐 {erro ? "Modo Offline" : "API Online: cantadas-api.onrender.com"}</p>
             <p>🗄️ {erro ? "Dados Locais" : "PostgreSQL Neon.tech"}</p>
-            <p>Feito com <FaHeart className="heart-icon" /> por Victor Gabriel</p>
+            <p>Feito por Victor Gabriel</p>
           </div>
           
           <div className="social-links">
