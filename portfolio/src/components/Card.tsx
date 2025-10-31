@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../assets/styles/Card.css';
 
 export interface CardProps {
@@ -7,11 +7,33 @@ export interface CardProps {
   title: string;
   dateRange: string;
   hoverText: string;
-  open?: boolean; // agora é opcional
+  open?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({ imageSrc, altText, title, dateRange, hoverText, open = false }) => {
   const [isClicked, setIsClicked] = useState(open);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detecta se é mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // No mobile, sempre começa fechado independente da prop 'open'
+  useEffect(() => {
+    if (isMobile) {
+      setIsClicked(false);
+    } else {
+      setIsClicked(open);
+    }
+  }, [isMobile, open]);
 
   const handleClick = () => {
     setIsClicked(!isClicked);

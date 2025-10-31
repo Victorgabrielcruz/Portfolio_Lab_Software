@@ -7,23 +7,26 @@
   opacity: 0;
   transform: translateY(20px);
   animation: fadeInUp 0.6s forwards;
+  cursor: pointer;
 }
+
 @keyframes fadeInUp {
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+
 .card-click-text p{
   color: #222;
 }
-/* card continua como estava */
+
 .card-container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 280px; /* reduzi um pouco */
+  width: 280px;
   min-height: 200px;
   border-radius: 10px;
   overflow: hidden;
@@ -39,14 +42,14 @@
 
 .card-image-wrapper {
   width: 100%;
-  height: 140px; /* ou a altura que você quiser */
+  height: 140px;
   overflow: hidden;
 }
 
 .card-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* faz a imagem preencher todo o espaço, cortando se necessário */
+  object-fit: cover;
 }
 
 .card-info {
@@ -73,11 +76,11 @@
 /* Quando expandido, abre suave */
 .card-wrapper.expanded .card-click-text {
   max-width: 250px;
-  max-height: 220px; /* altura menor */
+  max-height: 220px;
   opacity: 1;
   margin-left: 20px;
   padding: 20px;
-  overflow-y: auto; /* scroll interno */
+  overflow-y: auto;
   font-size: 14px;
   line-height: 1.4;
 }
@@ -109,41 +112,76 @@
   font-size: 12px;
 }
 
-/* Responsivo: no celular o texto vai para baixo */
-/* MELHORAR a responsividade existente */
+/* ==================== */
+/* MOBILE STYLES - MELHORADO */
+/* ==================== */
 @media (max-width: 768px) {
   .card-wrapper {
     flex-direction: column;
     align-items: stretch;
     max-height: none;
-    margin: 15px;
+    margin: 15px 10px;
   }
 
+  /* No mobile, o texto fica escondido por padrão */
   .card-click-text {
     max-width: 100% !important;
-    opacity: 1;
+    opacity: 0;
     margin-left: 0;
-    margin-top: 10px;
-    padding: 15px;
-    max-height: 200px;
+    margin-top: 0;
+    padding: 0;
+    max-height: 0;
+    transition: all 0.3s ease-in-out;
   }
-  
+
+  /* Quando expandido no mobile */
+  .card-wrapper.expanded .card-click-text {
+    opacity: 1;
+    margin-top: 15px;
+    padding: 20px;
+    max-height: 300px; /* Altura maior no mobile */
+    border: 2px solid #a463f2;
+  }
+
   .card-container {
     width: 100%;
   }
+
+  /* Feedback visual para cards clicáveis no mobile */
+  .card-container:active {
+    transform: scale(0.98);
+    background-color: #444;
+  }
+
+  /* Indicador visual que é clicável */
+  .card-container::after {
+    content: "↕️ Clique para expandir";
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 10px;
+    color: #a463f2;
+    opacity: 0.7;
+  }
 }
 
-/* ADICIONAR para telas muito pequenas */
+/* Melhorias para telas muito pequenas */
 @media (max-width: 480px) {
   .card-wrapper {
-    margin: 10px;
+    margin: 10px 5px;
   }
-  
-  .card-container {
-    min-height: 180px;
+
+  .card-wrapper.expanded .card-click-text {
+    padding: 15px;
+    max-height: 250px;
+    font-size: 13px;
   }
-  
-  .card-image-wrapper {
-    height: 120px;
+
+  .card-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .card-info p {
+    font-size: 0.9rem;
   }
 }

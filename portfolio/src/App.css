@@ -1,0 +1,12 @@
+/* Adicionar no global */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Efeito de parallax suave */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
