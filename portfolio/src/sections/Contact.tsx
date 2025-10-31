@@ -94,26 +94,6 @@ export default function Contacts() {
               rel="noreferrer"
               title="GitHub"
             >
-              <FaGithub className="social github" />
-            </a>
-            <button
-              onClick={openWhatsApp}
-              className="social whatsapp-btn"
-              title={texts[language].whatsapp}
-            >
-              <FaWhatsapp className="social whatsapp" />
-            </button>
-          </div>
-
-          {/* Botão WhatsApp para mobile */}
-          <button 
-            onClick={openWhatsApp}
-            className="whatsapp-mobile-btn"
-          >
-            <FaWhatsapp className="whatsapp-icon" />
-            {texts[language].whatsapp}
-          </button>
-        </div>
 
         <div className="contact-right">
           <form ref={form} onSubmit={sendEmail} className="contact-form">
