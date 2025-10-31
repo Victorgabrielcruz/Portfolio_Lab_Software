@@ -14,6 +14,19 @@ export interface Estatisticas {
   totalCantadas: number;
 }
 
+export interface Mensagem {
+  id: number;
+  mensagem: string;
+  privada: boolean;
+  data_criacao: string;
+  lida: boolean;
+}
+
+export interface NovaMensagem {
+  mensagem: string;
+  privada: boolean;
+}
+
 class ApiService {
   private async fetchAPI<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const url = `${API_BASE_URL}${endpoint}`;
@@ -80,6 +93,19 @@ class ApiService {
       visitas: data.visitas,
       totalCantadas: data.totalCantadas
     };
+  }
+
+  async enviarMensagem(mensagemData: NovaMensagem): Promise<{ mensagem: Mensagem; message: string }> {
+    return this.fetchAPI<{ mensagem: Mensagem; message: string }>('/mensagens', {
+      method: 'POST',
+      body: JSON.stringify(mensagemData)
+    });
+  }
+
+  // Obter mensagens públicas
+  async obterMensagens(): Promise<Mensagem[]> {
+    const data = await this.fetchAPI<{ mensagens: Mensagem[] }>('/mensagens');
+    return data.mensagens || [];
   }
 }
 

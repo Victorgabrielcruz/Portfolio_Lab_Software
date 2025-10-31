@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
-import { FaWhatsapp, FaInstagram, FaHeart, FaDatabase, FaSync } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaHeart, FaDatabase, FaSync, FaEnvelope } from "react-icons/fa";
 import { apiService } from "../service/apiService";
+import ModalMensagem from "../components/ModalMensagem";
 import "../assets/styles/CantadasSecreta.css";
 
-const CantadasSecreta = () => {
-  const [cantadaAtual, setCantadaAtual] = useState("");
-  const [contador, setContador] = useState(0);
-  const [totalCantadas, setTotalCantadas] = useState(0);
-  const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState("");
+const CantadasSecreta: React.FC = () => {
+  const [cantadaAtual, setCantadaAtual] = useState<string>("");
+  const [contador, setContador] = useState<number>(0);
+  const [totalCantadas, setTotalCantadas] = useState<number>(0);
+  const [carregando, setCarregando] = useState<boolean>(true);
+  const [erro, setErro] = useState<string>("");
+  const [modalAberto, setModalAberto] = useState<boolean>(false);
 
   // Cantadas de fallback
-  const cantadasFallback = [
+  const cantadasFallback: string[] = [
     "Gata, você é igual código binário... só tem 0 e 1! 💻",
     "Você é like do Instagram? Porque toda vez que te vejo, eu curto! ❤️",
     "Meu amor por você é igual bug no código... inesperado e difícil de resolver! 🐛",
@@ -28,35 +30,43 @@ const CantadasSecreta = () => {
     inicializarDados();
   }, []);
 
-  const inicializarDados = async () => {
+  const inicializarDados = async (): Promise<void> => {
     try {
       setCarregando(true);
       setErro("");
 
-      // Registrar visita na API e obter estatísticas
-      const estatisticas = await apiService.registrarVisita();
-      setContador(estatisticas.visitas);
-      setTotalCantadas(estatisticas.totalCantadas);
+      // Testar conexão com a API
+      await apiService.healthCheck();
+      
+      // Registrar visita e obter estatísticas
+      const stats = await apiService.registrarVisita();
+      setContador(stats.visitas);
+      setTotalCantadas(stats.totalCantadas);
 
       // Gerar primeira cantada
       await gerarNovaCantadaAPI();
 
     } catch (error) {
-      console.error('Erro ao conectar com a API:', error);
-      setErro("Não foi possível conectar com o servidor. Usando modo offline.");
-      
-      // Modo fallback
-      const visitasLocal = parseInt(localStorage.getItem('visitasCantadas') || '0') + 1;
-      localStorage.setItem('visitasCantadas', visitasLocal.toString());
-      setContador(visitasLocal);
-      setTotalCantadas(cantadasFallback.length);
-      gerarNovaCantadaLocal();
+      console.error('Erro ao carregar dados da API:', error);
+      setErro('Não foi possível conectar com o servidor. Usando modo offline.');
+      usarFallback();
     } finally {
       setCarregando(false);
     }
   };
 
-  const gerarNovaCantadaAPI = async () => {
+  const usarFallback = (): void => {
+    // Contador fallback
+    const visitasLocal = parseInt(localStorage.getItem('visitasCantadas') || '0') + 1;
+    localStorage.setItem('visitasCantadas', visitasLocal.toString());
+    setContador(visitasLocal);
+    setTotalCantadas(cantadasFallback.length);
+    
+    // Gerar primeira cantada local
+    gerarNovaCantadaLocal();
+  };
+
+  const gerarNovaCantadaAPI = async (): Promise<void> => {
     try {
       const cantada = await apiService.obterCantadaAleatoria();
       setCantadaAtual(cantada);
@@ -66,12 +76,12 @@ const CantadasSecreta = () => {
     }
   };
 
-  const gerarNovaCantadaLocal = () => {
+  const gerarNovaCantadaLocal = (): void => {
     const cantadaAleatoria = cantadasFallback[Math.floor(Math.random() * cantadasFallback.length)];
     setCantadaAtual(cantadaAleatoria);
   };
 
-  const gerarNovaCantada = () => {
+  const gerarNovaCantada = (): void => {
     if (erro) {
       gerarNovaCantadaLocal();
     } else {
@@ -79,7 +89,7 @@ const CantadasSecreta = () => {
     }
   };
 
-  const copiarCantada = async () => {
+  const copiarCantada = async (): Promise<void> => {
     try {
       await navigator.clipboard.writeText(cantadaAtual);
       alert("Cantada copiada! 🎯");
@@ -89,19 +99,19 @@ const CantadasSecreta = () => {
     }
   };
 
-  const abrirWhatsApp = () => {
+  const abrirWhatsApp = (): void => {
     const phoneNumber = "5538998968898";
     const message = "Olá Victor! Acabei de ver suas cantadas dev e queria conversar! 😄";
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
-  const abrirInstagram = () => {
+  const abrirInstagram = (): void => {
     const instagramUrl = "https://www.instagram.com/victor_gc21/";
     window.open(instagramUrl, '_blank');
   };
 
-  const recarregar = () => {
+  const recarregar = (): void => {
     setErro("");
     inicializarDados();
   };
@@ -129,7 +139,7 @@ const CantadasSecreta = () => {
         {erro && (
           <div className="error-message">
             <span>⚠️ {erro}</span>
-            <button onClick={recarregar} className="btn">
+            <button onClick={recarregar} className="btn-retry">
               <FaSync /> Tentar Novamente
             </button>
           </div>
@@ -144,12 +154,21 @@ const CantadasSecreta = () => {
         </div>
         
         <div className="cantada-actions">
-          <button onClick={gerarNovaCantada} className="btn nova-cantada">
+          <button 
+            onClick={gerarNovaCantada} 
+            className="btn nova-cantada"
+            disabled={carregando}
+          >
             🔄 Nova Cantada
           </button>
-          <button onClick={copiarCantada} className="btn copiar" disabled={!cantadaAtual}>
+          <button 
+            onClick={copiarCantada} 
+            className="btn copiar"
+            disabled={!cantadaAtual || carregando}
+          >
             📋 Copiar
           </button>
+
         </div>
       </div>
 
@@ -187,6 +206,13 @@ const CantadasSecreta = () => {
                 <FaInstagram className="social-icon" />
                 Instagram
               </button>
+                        <button 
+            onClick={() => setModalAberto(true)} 
+            className="btn mensagem-btn"
+            disabled={carregando}
+          >
+            <FaEnvelope /> Enviar Mensagem
+          </button>
             </div>
           </div>
         </div>
@@ -200,6 +226,12 @@ const CantadasSecreta = () => {
           </p>
         </div>
       </footer>
+
+      {/* Modal de Mensagens Anônimas */}
+      <ModalMensagem 
+        isOpen={modalAberto} 
+        onClose={() => setModalAberto(false)} 
+      />
     </div>
   );
 };
