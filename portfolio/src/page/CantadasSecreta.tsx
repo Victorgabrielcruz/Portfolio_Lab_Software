@@ -102,16 +102,6 @@ const CantadasSecreta = () => {
         </div>
       </div>
 
-      <div className="instructions">
-        <h3>🎯 Como usar:</h3>
-        <ul>
-          <li>Recarregue a página para uma cantada nova</li>
-          <li>Clique em "Nova Cantada" para outra aleatória</li>
-          <li>Copie e envie para alguém especial</li>
-          <li>Compartilhe o link secreto com amigos devs</li>
-        </ul>
-      </div>
-
       {/* NOVO FOOTER COM REDES SOCIAIS */}
       <footer className="cantadas-footer">
         <div className="footer-content">
