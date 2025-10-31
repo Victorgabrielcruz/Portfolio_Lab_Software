@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FaWhatsapp, FaInstagram, FaHeart, FaDatabase, FaSync, FaEnvelope } from "react-icons/fa";
+import { FaWhatsapp, FaInstagram, FaDatabase, FaSync, FaEnvelope } from "react-icons/fa";
 import { apiService } from "../service/apiService";
 import ModalMensagem from "../components/ModalMensagem";
 import "../assets/styles/CantadasSecreta.css";
