@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /secret
+Disallow: /cantadas
+Disallow: /lab
+Disallow: /dev
+Disallow: /love
+Disallow: /romantic
+
+Sitemap: https://victorgabrielcruzpereira.com.br/sitemap.xml
