@@ -129,7 +129,7 @@ const CantadasSecreta = () => {
         {erro && (
           <div className="error-message">
             <span>⚠️ {erro}</span>
-            <button onClick={recarregar} className="btn-retry">
+            <button onClick={recarregar} className="btn">
               <FaSync /> Tentar Novamente
             </button>
           </div>
