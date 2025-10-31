@@ -65,14 +65,14 @@
     margin-left: 4em;
 }
 .paragraph-blocks-about {
-    font-family: 'Hack', sans-serif;
-    font-size: clamp(1rem, 2.5vw, 1.1rem);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    color: rgb(236, 236, 236);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease-out forwards;
+  font-family: 'Hack', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.1rem);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  color: rgb(236, 236, 236);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease-out forwards;
 }
 .paragraph-blocks-about:nth-child(2) {
     animation-delay: 0.4s;
@@ -82,9 +82,44 @@
 }
 
 /* animação parágrafos */
+/* CORREÇÃO: Animação dos parágrafos estava com translateX em vez de translateY */
 @keyframes fadeUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); /* CORRIGIDO: era translateX(-100%) */
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); /* CORRIGIDO: era translateX(0) */
+  }
+}
+
+
+/* ADICIONAR ao final do about.css */
+@media (max-width: 768px) {
+  .about {
+    flex-direction: column;
+    margin-right: 0;
+    gap: 2rem;
+    text-align: center;
+  }
+  
+  .about-description {
+    margin-left: 0;
+    padding: 0 1rem;
+  }
+  
+  .img-about img {
+    max-width: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container-about {
+    padding: 2rem 0;
+  }
+  
+  .img-about img {
+    max-width: 250px;
+  }
 }

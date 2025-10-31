@@ -129,25 +129,57 @@
     to { transform: translateX(0); opacity: 1; }
 }
 
-/* ===================== */
-/* Responsividade */
+/* MELHORAR a responsividade existente */
 @media (max-width: 768px) {
-    .home {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
+  .home {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: auto;
+    padding: 2rem 0;
+  }
 
-    .home-text {
-        padding-right: 0;
-    }
+  .home-text {
+    padding-right: 0;
+    margin-bottom: 2rem;
+  }
 
-    .home img {
-        max-width: 80%;
-    }
+  .home img {
+    max-width: 80%;
+  }
 
-    .paragraph-blocks, .paragraph-blocks_ {
-        max-width: 90%;
-        text-align: justify;
+  .paragraph-blocks, .paragraph-blocks_ {
+    max-width: 90%;
+    text-align: justify;
+  }
+  
+  /* Corrigir animação do botão em mobile */
+  .home-button {
+    transform: translateX(0); /* Remove translateX em mobile */
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 3s;
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
     }
+  }
+}
+
+/* ADICIONAR para telas muito pequenas */
+@media (max-width: 480px) {
+  .home {
+    margin-left: 2vw;
+    margin-right: 2vw;
+  }
+  
+  .home img {
+    max-width: 70%;
+  }
+  
+  .home-button {
+    max-width: 250px;
+  }
 }

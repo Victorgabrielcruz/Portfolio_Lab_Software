@@ -110,11 +110,13 @@
 }
 
 /* Responsivo: no celular o texto vai para baixo */
+/* MELHORAR a responsividade existente */
 @media (max-width: 768px) {
   .card-wrapper {
     flex-direction: column;
     align-items: stretch;
     max-height: none;
+    margin: 15px;
   }
 
   .card-click-text {
@@ -124,5 +126,24 @@
     margin-top: 10px;
     padding: 15px;
     max-height: 200px;
+  }
+  
+  .card-container {
+    width: 100%;
+  }
+}
+
+/* ADICIONAR para telas muito pequenas */
+@media (max-width: 480px) {
+  .card-wrapper {
+    margin: 10px;
+  }
+  
+  .card-container {
+    min-height: 180px;
+  }
+  
+  .card-image-wrapper {
+    height: 120px;
   }
 }

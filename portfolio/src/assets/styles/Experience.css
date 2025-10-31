@@ -45,3 +45,29 @@
     transform: translateY(0);
   }
 }
+/* ADICIONAR ao final do Experience.css */
+@media (max-width: 1024px) {
+  .technologies-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .technologies-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .experience {
+    padding: 20px;
+  }
+  
+  .experience-title {
+    font-size: 2em;
+  }
+  
+  .technologies-title {
+    font-size: 1.5em;
+  }
+}
