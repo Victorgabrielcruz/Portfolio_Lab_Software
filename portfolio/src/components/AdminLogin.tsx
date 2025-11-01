@@ -102,12 +102,6 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
             )}
           </button>
         </form>
-
-        <div className="login-info">
-          <p>💡 <strong>Credenciais padrão:</strong></p>
-          <p>Usuário: <code>admin</code></p>
-          <p>Senha: <code>admin123</code></p>
-        </div>
       </div>
     </div>
   );
