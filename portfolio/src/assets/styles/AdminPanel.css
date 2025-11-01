@@ -2,6 +2,8 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
   color: white;
+  border-radius: 50px;
+  
 }
 
 .admin-header {
@@ -12,6 +14,8 @@
   background: rgba(255, 255, 255, 0.02);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+    border-radius: 20px;
+
 }
 
 .admin-title h1 {
@@ -52,6 +56,7 @@
   padding: 0 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background: rgba(255, 255, 255, 0.02);
+  
 }
 
 .nav-btn {
