@@ -68,6 +68,7 @@ function App() {
 
         {/* 👇 ROTAS SECRETAS - SEM NAVBAR */}
         <Route path="/lab" element={<CantadasSecreta />} />
+        <Route path="/lab/secretMe" element={<CantadasSecreta autoOpenModal={true}/>} />
 
         <Route path="/lab/admin" element={<AdminApp />} />
         

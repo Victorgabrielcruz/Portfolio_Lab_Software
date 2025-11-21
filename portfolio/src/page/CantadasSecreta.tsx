@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { FaWhatsapp, FaInstagram, FaDatabase, FaSync, FaEnvelope } from "react-icons/fa";
 import { apiService } from "../service/apiService";
 import ModalMensagem from "../components/ModalMensagem";
 import "../assets/styles/CantadasSecreta.css";
 
-const CantadasSecreta: React.FC = () => {
+interface CantadasSecretaProps {
+  autoOpenModal?: boolean;
+}
+
+const CantadasSecreta: React.FC<CantadasSecretaProps> = ({ autoOpenModal = false }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [cantadaAtual, setCantadaAtual] = useState<string>("");
   const [contador, setContador] = useState<number>(0);
   const [totalCantadas, setTotalCantadas] = useState<number>(0);
   const [carregando, setCarregando] = useState<boolean>(true);
   const [erro, setErro] = useState<string>("");
-  const [modalAberto, setModalAberto] = useState<boolean>(false);
+  const [modalAberto, setModalAberto] = useState<boolean>(autoOpenModal);
 
   // Cantadas de fallback
   const cantadasFallback: string[] = [
@@ -28,7 +34,15 @@ const CantadasSecreta: React.FC = () => {
 
   useEffect(() => {
     inicializarDados();
-  }, []);
+    
+    // Se não veio por prop, verifica query params
+    if (!autoOpenModal) {
+      const modalParam = searchParams.get('modal');
+      if (modalParam === 'mensagem') {
+        setModalAberto(true);
+      }
+    }
+  }, [autoOpenModal, searchParams]);
 
   const inicializarDados = async (): Promise<void> => {
     try {
@@ -116,6 +130,25 @@ const CantadasSecreta: React.FC = () => {
     inicializarDados();
   };
 
+  const abrirModalMensagem = (): void => {
+    setModalAberto(true);
+    // Adicionar parâmetro na URL
+    searchParams.set('modal', 'mensagem');
+    setSearchParams(searchParams);
+  };
+
+  const fecharModal = (): void => {
+    setModalAberto(false);
+    // Remover parâmetro da URL
+    searchParams.delete('modal');
+    setSearchParams(searchParams);
+    
+    // Se veio de rota específica, redireciona para rota normal
+    if (autoOpenModal) {
+      window.history.replaceState(null, '', '/cantadas');
+    }
+  };
+
   if (carregando) {
     return (
       <div className="cantadas-container">
@@ -168,7 +201,6 @@ const CantadasSecreta: React.FC = () => {
           >
             📋 Copiar
           </button>
-
         </div>
       </div>
 
@@ -206,13 +238,13 @@ const CantadasSecreta: React.FC = () => {
                 <FaInstagram className="social-icon" />
                 Instagram
               </button>
-                        <button 
-            onClick={() => setModalAberto(true)} 
-            className="btn mensagem-btn"
-            disabled={carregando}
-          >
-            <FaEnvelope /> Enviar Mensagem
-          </button>
+              <button 
+                onClick={abrirModalMensagem} 
+                className="btn mensagem-btn"
+                disabled={carregando}
+              >
+                <FaEnvelope /> Enviar Mensagem
+              </button>
             </div>
           </div>
         </div>
@@ -230,7 +262,7 @@ const CantadasSecreta: React.FC = () => {
       {/* Modal de Mensagens Anônimas */}
       <ModalMensagem 
         isOpen={modalAberto} 
-        onClose={() => setModalAberto(false)} 
+        onClose={fecharModal} 
       />
     </div>
   );
