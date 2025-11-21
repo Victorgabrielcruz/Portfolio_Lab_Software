@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaTimes, FaComment, FaEye, FaEyeSlash, FaUserSecret } from 'react-icons/fa';
+import { FaTimes, FaComment, FaUserSecret } from 'react-icons/fa';
 import { apiService } from '../service/apiService';
 import '../assets/styles/ModalMensagem.css';
 
@@ -21,13 +21,6 @@ const ModalMensagem: React.FC<ModalMensagemProps> = ({ isOpen, onClose }) => {
     setFormData(prev => ({
       ...prev,
       mensagem: e.target.value
-    }));
-  };
-
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      privada: e.target.checked
     }));
   };
 
