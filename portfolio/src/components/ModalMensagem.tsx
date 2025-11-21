@@ -83,7 +83,7 @@ const ModalMensagem: React.FC<ModalMensagemProps> = ({ isOpen, onClose }) => {
     <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>💌 Mensagem Anônima</h2>
+          <h2>Mensagem Anônima</h2>
           <button className="modal-close" onClick={handleClose}>
             <FaTimes />
           </button>
@@ -93,7 +93,6 @@ const ModalMensagem: React.FC<ModalMensagemProps> = ({ isOpen, onClose }) => {
           <div className="modal-success">
             <div className="success-icon">✅</div>
             <h3>Mensagem enviada com sucesso!</h3>
-            <small>Sua mensagem é {formData.privada ? 'privada 🔒' : 'pública 🌟'}</small>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="modal-form">
@@ -123,33 +122,6 @@ const ModalMensagem: React.FC<ModalMensagemProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
 
-            <div className="form-group checkbox-group">
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  name="privada"
-                  checked={formData.privada}
-                  onChange={handleCheckboxChange}
-                  disabled={enviando}
-                />
-                <span className="checkmark"></span>
-                <div className="checkbox-text">
-                  {formData.privada ? <FaEyeSlash /> : <FaEye />}
-                  <div>
-                    <strong>
-                      {formData.privada ? 'Mensagem Privada' : 'Mensagem Pública'}
-                    </strong>
-                    <small>
-                      {formData.privada 
-                        ? 'Apenas eu verei esta mensagem 🔒' 
-                        : 'Todos poderão ver esta mensagem 🌟'
-                      }
-                    </small>
-                  </div>
-                </div>
-              </label>
-            </div>
-
             {erro && <div className="form-error">{erro}</div>}
 
             <div className="form-actions">
@@ -166,7 +138,7 @@ const ModalMensagem: React.FC<ModalMensagemProps> = ({ isOpen, onClose }) => {
                 className="btn btn-submit"
                 disabled={enviando || formData.mensagem.trim().length < 5}
               >
-                {enviando ? 'Enviando... ✨' : 'Enviar Mensagem Anônima 💖'}
+                {enviando ? 'Enviando... ✨' : 'Enviar Mensagem Anônima'}
               </button>
             </div>
           </form>
