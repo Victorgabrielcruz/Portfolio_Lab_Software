@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://cantadas-api.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api-secret-znis.vercel.app/api';
 
 export interface AdminCantada {
   id: number;
