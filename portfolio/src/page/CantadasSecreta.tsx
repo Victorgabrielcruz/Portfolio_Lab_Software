@@ -155,7 +155,6 @@ const CantadasSecreta: React.FC<CantadasSecretaProps> = ({ autoOpenModal = false
         <div className="loading">
           <FaDatabase className="loading-icon" />
           <p>Conectando com a API...</p>
-          <p className="loading-sub">Carregando suas cantadas especiais! 💖</p>
         </div>
       </div>
     );
