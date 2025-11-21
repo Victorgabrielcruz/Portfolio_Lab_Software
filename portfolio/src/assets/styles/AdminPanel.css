@@ -443,7 +443,28 @@
   width: 18px;
   height: 18px;
 }
+.btn-export-small, .btn-edit, .btn-delete {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 0.9em;
+}
 
+.btn-export-small {
+  background: #8b5cf6;
+  color: white;
+}
+
+.btn-export-small:hover {
+  background: #7c3aed;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+}
 .modal-actions {
   display: flex;
   gap: 15px;

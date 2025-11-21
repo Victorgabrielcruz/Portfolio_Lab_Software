@@ -1,6 +1,18 @@
-import { useState, useEffect } from 'react';
-import { FaSignOutAlt, FaPlus, FaEdit, FaTrash, FaEnvelope, FaChartBar, FaSync } from 'react-icons/fa';
+// components/AdminPanel.tsx
+import { useState, useEffect, useRef } from 'react';
+import { 
+  FaSignOutAlt, 
+  FaPlus, 
+  FaEdit, 
+  FaTrash, 
+  FaEnvelope, 
+  FaChartBar, 
+  FaSync, 
+  FaDownload,
+  FaImage 
+} from 'react-icons/fa';
 import { adminService } from '../service/adminService';
+import { useExportToImage } from '../hooks/useExportToImage';
 import type { AdminCantada, AdminMensagem, AdminEstatisticas } from '../service/adminService';
 import '../assets/styles/AdminPanel.css';
 
@@ -17,6 +29,9 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onLogout }) => {
   const [modalAberto, setModalAberto] = useState<'adicionar' | 'editar' | null>(null);
   const [cantadaEditando, setCantadaEditando] = useState<AdminCantada | null>(null);
   const [novaCantada, setNovaCantada] = useState({ texto: '', categoria: 'dev' });
+
+  const statsRef = useRef<HTMLDivElement>(null);
+  const { exportToImage } = useExportToImage();
 
   useEffect(() => {
     carregarDados();
@@ -123,6 +138,295 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onLogout }) => {
     setModalAberto('editar');
   };
 
+  const handleExportStats = async () => {
+    if (!statsRef.current) return;
+    
+    try {
+      await exportToImage(statsRef.current, 'estatisticas-admin');
+      alert('Estatísticas exportadas com sucesso! 📸');
+    } catch (error) {
+      console.error('Erro ao exportar estatísticas:', error);
+      alert('Erro ao exportar estatísticas. Tente novamente.');
+    }
+  };
+
+  const handleExportCantada = async (cantada: AdminCantada) => {
+    // Criar elemento temporário para exportação
+    const tempElement = document.createElement('div');
+    tempElement.className = 'cantada-export-card';
+    
+    const categoriaIcon = {
+      'dev': '💻',
+      'romantica': '💖',
+      'engracada': '😄'
+    }[cantada.categoria] || '💌';
+
+    tempElement.innerHTML = `
+      <div class="export-header">
+        <div class="export-title">
+          <h3>${categoriaIcon} Cantada ${cantada.categoria}</h3>
+          <span class="export-status">${cantada.ativa ? '✅ Ativa' : '❌ Inativa'}</span>
+        </div>
+        <div class="export-date">
+          📅 ${new Date(cantada.data_criacao).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+          })}
+        </div>
+      </div>
+      <div class="export-content">
+        <div class="cantada-text-export">
+          "${cantada.texto}"
+        </div>
+      </div>
+      <div class="export-footer">
+        <div class="export-watermark">
+          💌 Sistema de Cantadas
+        </div>
+      </div>
+    `;
+
+    // Aplicar estilos
+    Object.assign(tempElement.style, {
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      color: 'white',
+      padding: '30px',
+      borderRadius: '16px',
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      width: '500px',
+      maxWidth: '90vw',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+      border: '2px solid rgba(255,255,255,0.1)',
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      zIndex: '10000',
+      opacity: '0'
+    });
+
+    const style = document.createElement('style');
+    style.textContent = `
+      .cantada-export-card .export-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        padding-bottom: 15px;
+      }
+      
+      .cantada-export-card .export-title h3 {
+        margin: 0;
+        font-size: 1.4em;
+        font-weight: 600;
+        text-transform: capitalize;
+      }
+      
+      .cantada-export-card .export-status {
+        background: rgba(255,255,255,0.2);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        margin-top: 8px;
+        display: inline-block;
+      }
+      
+      .cantada-export-card .export-date {
+        font-size: 0.9em;
+        opacity: 0.9;
+        text-align: right;
+      }
+      
+      .cantada-export-card .export-content {
+        margin: 25px 0;
+      }
+      
+      .cantada-export-card .cantada-text-export {
+        font-size: 1.3em;
+        line-height: 1.6;
+        font-style: italic;
+        text-align: center;
+        padding: 20px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 12px;
+        border-left: 4px solid rgba(255,255,255,0.3);
+      }
+      
+      .cantada-export-card .export-footer {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        text-align: center;
+        opacity: 0.8;
+        font-size: 0.9em;
+      }
+    `;
+
+    document.head.appendChild(style);
+    document.body.appendChild(tempElement);
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+    tempElement.style.opacity = '1';
+
+    try {
+      await exportToImage(tempElement, `cantada-${cantada.id}`);
+    } catch (error) {
+      console.error('Erro ao exportar cantada:', error);
+      alert('Erro ao exportar cantada. Tente novamente.');
+    } finally {
+      setTimeout(() => {
+        document.body.removeChild(tempElement);
+        document.head.removeChild(style);
+      }, 100);
+    }
+  };
+
+  const handleExportMensagem = async (mensagem: AdminMensagem) => {
+    // Criar elemento temporário estilizado para exportação
+    const tempElement = document.createElement('div');
+    tempElement.className = 'mensagem-export-card';
+    
+    // Determinar cores baseadas no tipo de mensagem
+    const isPrivate = mensagem.privada;
+    const backgroundColor = isPrivate ? 
+      'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : 
+      'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+    
+    const icon = isPrivate ? '🔒' : '🌍';
+    const tipoTexto = isPrivate ? 'Mensagem Privada' : 'Mensagem Pública';
+    const statusIcon = mensagem.lida ? '📭' : '📬';
+    const statusTexto = mensagem.lida ? 'Lida' : 'Nova';
+
+    tempElement.innerHTML = `
+      <div class="export-header">
+        <div class="export-title">
+          <h3>${icon} ${tipoTexto}</h3>
+          <span class="export-status">${statusIcon} ${statusTexto}</span>
+        </div>
+        <div class="export-date">
+          📅 ${new Date(mensagem.data_criacao).toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+          })}
+        </div>
+      </div>
+      <div class="export-content">
+        <div class="mensagem-text-export">
+          "${mensagem.mensagem}"
+        </div>
+      </div>
+      <div class="export-footer">
+        <div class="export-watermark">
+          💌 Sistema de Mensagens Anônimas
+        </div>
+      </div>
+    `;
+
+    // Aplicar estilos diretamente
+    Object.assign(tempElement.style, {
+      background: backgroundColor,
+      color: 'white',
+      padding: '30px',
+      borderRadius: '16px',
+      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+      width: '500px',
+      maxWidth: '90vw',
+      boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+      border: '2px solid rgba(255,255,255,0.1)',
+      position: 'fixed',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      zIndex: '10000',
+      opacity: '0',
+      transition: 'opacity 0.3s ease'
+    });
+
+    // Estilos para os elementos internos
+    const style = document.createElement('style');
+    style.textContent = `
+      .mensagem-export-card .export-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.2);
+        padding-bottom: 15px;
+      }
+      
+      .mensagem-export-card .export-title h3 {
+        margin: 0;
+        font-size: 1.4em;
+        font-weight: 600;
+      }
+      
+      .mensagem-export-card .export-status {
+        background: rgba(255,255,255,0.2);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        margin-top: 8px;
+        display: inline-block;
+      }
+      
+      .mensagem-export-card .export-date {
+        font-size: 0.9em;
+        opacity: 0.9;
+        text-align: right;
+      }
+      
+      .mensagem-export-card .export-content {
+        margin: 25px 0;
+      }
+      
+      .mensagem-export-card .mensagem-text-export {
+        font-size: 1.3em;
+        line-height: 1.6;
+        font-style: italic;
+        text-align: center;
+        padding: 20px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 12px;
+        border-left: 4px solid rgba(255,255,255,0.3);
+      }
+      
+      .mensagem-export-card .export-footer {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        text-align: center;
+        opacity: 0.8;
+        font-size: 0.9em;
+      }
+    `;
+
+    document.head.appendChild(style);
+    document.body.appendChild(tempElement);
+
+    // Pequeno delay para garantir que os estilos são aplicados
+    await new Promise(resolve => setTimeout(resolve, 100));
+    
+    tempElement.style.opacity = '1';
+
+    try {
+      await exportToImage(tempElement, `mensagem-${mensagem.id}`);
+    } catch (error) {
+      console.error('Erro ao exportar mensagem:', error);
+      alert('Erro ao exportar mensagem. Tente novamente.');
+    } finally {
+      // Limpeza
+      setTimeout(() => {
+        document.body.removeChild(tempElement);
+        document.head.removeChild(style);
+      }, 100);
+    }
+  };
+
   return (
     <div className="admin-panel">
       {/* Header */}
@@ -202,14 +506,23 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onLogout }) => {
                       </div>
                       <div className="cantada-actions">
                         <button
+                          onClick={() => handleExportCantada(cantada)}
+                          className="btn-export-small"
+                          title="Exportar como imagem"
+                        >
+                          <FaImage />
+                        </button>
+                        <button
                           onClick={() => abrirModalEditar(cantada)}
                           className="btn-edit"
+                          title="Editar cantada"
                         >
                           <FaEdit />
                         </button>
                         <button
                           onClick={() => handleExcluirCantada(cantada.id)}
                           className="btn-delete"
+                          title="Excluir cantada"
                         >
                           <FaTrash />
                         </button>
@@ -225,10 +538,12 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onLogout }) => {
               <div className="mensagens-section">
                 <div className="section-header">
                   <h2>💬 Mensagens Recebidas</h2>
-                  <button onClick={carregarDados} className="btn-refresh">
-                    <FaSync />
-                    Atualizar
-                  </button>
+                  <div className="header-actions">
+                    <button onClick={carregarDados} className="btn-refresh">
+                      <FaSync />
+                      Atualizar
+                    </button>
+                  </div>
                 </div>
 
                 <div className="mensagens-list">
@@ -250,8 +565,16 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onLogout }) => {
                       </div>
                       <div className="mensagem-actions">
                         <button
+                          onClick={() => handleExportMensagem(mensagem)}
+                          className="btn-export-small"
+                          title="Exportar como imagem"
+                        >
+                          <FaImage />
+                        </button>
+                        <button
                           onClick={() => handleExcluirMensagem(mensagem.id)}
                           className="btn-delete"
+                          title="Excluir mensagem"
                         >
                           <FaTrash />
                         </button>
@@ -267,13 +590,19 @@ const AdminPanel: React.FC<AdminPanelProps> = ({ onLogout }) => {
               <div className="estatisticas-section">
                 <div className="section-header">
                   <h2>📊 Estatísticas do Sistema</h2>
-                  <button onClick={carregarDados} className="btn-refresh">
-                    <FaSync />
-                    Atualizar
-                  </button>
+                  <div className="header-actions">
+                    <button onClick={handleExportStats} className="btn-export">
+                      <FaDownload />
+                      Exportar como Imagem
+                    </button>
+                    <button onClick={carregarDados} className="btn-refresh">
+                      <FaSync />
+                      Atualizar
+                    </button>
+                  </div>
                 </div>
 
-                <div className="stats-grid">
+                <div ref={statsRef} className="stats-grid">
                   <div className="stat-card">
                     <div className="stat-icon">👥</div>
                     <div className="stat-info">
